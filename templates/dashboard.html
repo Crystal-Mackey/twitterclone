@@ -1,0 +1,61 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<br />
+<div class="card shadow-sm border-dark">
+  <div class="card-header text-dark" style="background-color: #9900ff">
+    <a class="btn btn-danger float-right" href="/logout/" role="button"
+      >Logout</a
+    >
+    <h3 class="card-title text-white">Hello, {{user.display_name}}</h3>
+    <h5 class="card-subtitle mb-2 text-muted">
+      <span class="badge badge-light"
+        ><a href="/profile/{{user.username}}/" class="text-dark"
+          >@{{user.username}}</a
+        ></span
+      >
+    </h5>
+  </div>
+</div>
+<br />
+{% if not feed %}
+<div class="container">
+  <p>
+    No tweets yet? How about finding some users to
+    follow or <a href="/create/">send a tweet</a> yourself!
+  </p>
+</div>
+{% else %} {% for tweet in feed %}
+<div class="card shadow-sm">
+  <div
+    class="card-header text-white border-light"
+    style="background-color: #9900ff"
+  >
+
+    <span class="badge badge-inherit text-light"
+      ><a
+        href="/profile/{{tweet.user.username}}/"
+        style="color: inherit; font-weight: bold; font-size: 20px"
+        >{{tweet.user.display_name}}</a
+      ></span
+    >
+    <span class="text-muted" style="color: #9900ff"
+      ><a href="/profile/{{tweet.user.username}}/" style="color: inherit"
+        >@{{tweet.user.username}}</a
+      ></span
+    >
+  </div>
+  <div class="card-body" style="background-color: #e1e8ed">
+    <blockquote class="blockquote mb-0">
+      <p>{{ tweet.tweet }}</p>
+      <footer class="blockquote-footer float-right">
+        <cite>{{tweet.time}}</cite> | <a href="/tweet/{{tweet.id}}/">Link</a>
+      </footer>
+    </blockquote>
+  </div>
+</div>
+<br />
+
+{% endfor %} 
+{% endif %} 
+{% endblock %}
